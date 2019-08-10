@@ -1,5 +1,7 @@
 package ru.stqa.pft.sandbox1;
 
+import java.awt.*;
+
 public class Point {
   public double x;
   public double y;
@@ -9,8 +11,9 @@ public class Point {
     this.y = y;
   }
 
-  public p1.distance(p2){
-    return Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
+  public double distance(Point p2){
+    double sqrt = Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
+    return sqrt;
   }
 
 }
