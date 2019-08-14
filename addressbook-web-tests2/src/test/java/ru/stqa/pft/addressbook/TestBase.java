@@ -122,7 +122,7 @@ public class TestBase {
   }
 
   protected void selectContact() {
-    wd.findElement(By.id("selected[]")).click();
+    wd.findElement(By.name("selected[]")).click();
   }
 
   @AfterMethod(alwaysRun = true)
