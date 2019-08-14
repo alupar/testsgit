@@ -12,6 +12,7 @@ public class Point {
   }
 
   public double distance(Point p2){
+    Point p1 = new Point(x,y);
     double sqrt = Math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
     return sqrt;
   }
