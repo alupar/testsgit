@@ -8,9 +8,9 @@ public class ContactDeletionTests extends TestBase{
 
   @Test
   public void testContactDeletion() throws Exception {
-    app.selectContact();
-    app.deleteSelectedContacts();
-    app.returnToHomePage();
+    app.getContactHelper().selectContact();
+    app.getContactHelper().deleteSelectedContacts();
+    app.getContactHelper().returnToHomePage();
   }
 
   private boolean isElementPresent(By by) {
