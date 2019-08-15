@@ -1,8 +1,6 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 
 public class ContactDeletionTests extends TestBase{
 
@@ -11,15 +9,6 @@ public class ContactDeletionTests extends TestBase{
     app.getContactHelper().selectContact();
     app.getContactHelper().deleteSelectedContacts();
     app.getContactHelper().returnToHomePage();
-  }
-
-  private boolean isElementPresent(By by) {
-    try {
-      app.getGroupHelper().wd.findElement(by);
-      return true;
-    } catch (NoSuchElementException e) {
-      return false;
-    }
   }
 
 }
