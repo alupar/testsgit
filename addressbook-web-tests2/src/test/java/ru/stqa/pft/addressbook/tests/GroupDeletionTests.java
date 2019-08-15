@@ -9,16 +9,16 @@ public class GroupDeletionTests extends TestBase {
 
   @Test
   public void testGroupDeletion() throws Exception {
-    app.gotoGroupPage();
-    app.selectGroup();
-    app.deleteSelectedGroups();
-    app.returnToGroupPage();
+    app.getNavigationHelper().gotoGroupPage();
+    app.getGroupHelper().selectGroup();
+    app.getGroupHelper().deleteSelectedGroups();
+    app.getGroupHelper().returnToGroupPage();
   }
 
 
   private boolean isElementPresent(By by) {
     try {
-      app.wd.findElement(by);
+      app.getGroupHelper().wd.findElement(by);
       return true;
     } catch (NoSuchElementException e) {
       return false;

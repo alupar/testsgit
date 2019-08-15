@@ -15,7 +15,7 @@ public class ContactDeletionTests extends TestBase{
 
   private boolean isElementPresent(By by) {
     try {
-      app.wd.findElement(by);
+      app.getGroupHelper().wd.findElement(by);
       return true;
     } catch (NoSuchElementException e) {
       return false;
