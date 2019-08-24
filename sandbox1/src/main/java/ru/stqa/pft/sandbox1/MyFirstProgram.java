@@ -1,8 +1,7 @@
 package ru.stqa.pft.sandbox1;
 
 public class MyFirstProgram {
-    double p1;
-    public void main(String[] args) {
+    public static void main(String[] args) {
       hello("world");
       hello("user");
       hello("bro");
