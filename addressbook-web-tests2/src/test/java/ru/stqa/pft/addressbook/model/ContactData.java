@@ -21,36 +21,6 @@ public class ContactData {
     this.group = group;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    ContactData that = (ContactData) o;
-
-    if (id != that.id) return false;
-    if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
-    if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
-    if (nickname != null ? !nickname.equals(that.nickname) : that.nickname != null) return false;
-    if (company != null ? !company.equals(that.company) : that.company != null) return false;
-    if (address != null ? !address.equals(that.address) : that.address != null) return false;
-    if (mobilephone != null ? !mobilephone.equals(that.mobilephone) : that.mobilephone != null) return false;
-    return group != null ? group.equals(that.group) : that.group == null;
-  }
-
-  @Override
-  public int hashCode() {
-    int result = id;
-    result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
-    result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-    result = 31 * result + (nickname != null ? nickname.hashCode() : 0);
-    result = 31 * result + (company != null ? company.hashCode() : 0);
-    result = 31 * result + (address != null ? address.hashCode() : 0);
-    result = 31 * result + (mobilephone != null ? mobilephone.hashCode() : 0);
-    result = 31 * result + (group != null ? group.hashCode() : 0);
-    return result;
-  }
-
   public ContactData(int id, String name, String firstname, String lastname, String nickname, String company, String address, String mobilephone, String group) {
     this.id = id;
     this.firstname = firstname;
@@ -94,6 +64,24 @@ public class ContactData {
 
   public int getId() {
     return id;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    ContactData that = (ContactData) o;
+
+    if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
+    return lastname != null ? lastname.equals(that.lastname) : that.lastname == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = firstname != null ? firstname.hashCode() : 0;
+    result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+    return result;
   }
 
   public String getFirstname() {
