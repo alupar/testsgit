@@ -1,7 +1,6 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -60,8 +59,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public void initContactModification(int index) {
-
-    click(By.xpath("//a.=get(index)"));
+    click(By.xpath("//a[@href='edit.php?id=" + index + "']"));
   }
 
   public void submitContactModification() {
