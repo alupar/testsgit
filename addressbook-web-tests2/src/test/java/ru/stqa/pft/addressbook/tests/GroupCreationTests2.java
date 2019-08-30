@@ -2,22 +2,20 @@ package ru.stqa.pft.addressbook.tests;
 
 import org.testng.Assert;
 import org.testng.annotations.*;
-import org.openqa.selenium.*;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 public class GroupCreationTests2 extends TestBase {
 
   @Test
   public void testGroupCreation2() throws Exception {
-    app.getNavigationHelper().gotoGroupPage();
-    List<GroupData> before = app.getGroupHelper().getGroupList();
+    app.goTo().groupPage();
+    List<GroupData> before = app.group().list();
     GroupData group = new GroupData("test2", null, null);
-    app.getGroupHelper().createGroup(group);
-    List<GroupData> after = app.getGroupHelper().getGroupList();
+    app.group().create(group);
+    List<GroupData> after = app.group().list();
     Assert.assertEquals(after.size(), before.size() + 1);
 
     group.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());

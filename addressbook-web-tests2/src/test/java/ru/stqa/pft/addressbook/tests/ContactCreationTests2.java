@@ -11,7 +11,7 @@ import java.util.Comparator;
 public class ContactCreationTests2 extends TestBase {
 
 
-  @Test
+  @Test(enabled = false)
   public void testContactCreation() throws Exception {
     List<ContactData> before = app.getContactHelper().getContactList();
     ContactData contact = new ContactData("first2", "last2", "nick2", "company2", "address2", "12345", "test111");
