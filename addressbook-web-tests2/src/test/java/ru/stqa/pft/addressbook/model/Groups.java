@@ -18,7 +18,7 @@ public class Groups extends ForwardingSet<GroupData> {
 
   @Override
   protected Set<GroupData> delegate() {
-    return null;
+    return this.delegate;
   }
 
   public Groups withAdded(GroupData group){
