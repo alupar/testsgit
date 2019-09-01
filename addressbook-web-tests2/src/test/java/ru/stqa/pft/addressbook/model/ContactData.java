@@ -1,13 +1,13 @@
 package ru.stqa.pft.addressbook.model;
 
 public class ContactData {
-  private int id;
-  private final String firstname;
-  private final String lastname;
-  private final String nickname;
-  private final String company;
-  private final String address;
-  private final String mobilephone;
+  private int id = Integer.MAX_VALUE;
+  private String firstname;
+  private String lastname;
+  private String nickname;
+  private String company;
+  private String address;
+  private String mobilephone;
   private String group;
 
   @Override
@@ -28,31 +28,44 @@ public class ContactData {
     return result;
   }
 
-  public ContactData(String firstname, String lastname, String nickname, String company, String address, String mobilephone, String group) {
-    this.id = Integer.MAX_VALUE;
-    this.firstname = firstname;
-    this.lastname = lastname;
-    this.nickname = nickname;
-    this.company = company;
-    this.address = address;
-    this.mobilephone = mobilephone;
-    this.group = group;
+  public ContactData withId(int id) {
+    this.id = id;
+    return this;
   }
 
-  public ContactData(int id, String name, String firstname, String lastname, String nickname, String company, String address, String mobilephone, String group) {
-    this.id = id;
+  public ContactData withFirstname(String firstname) {
     this.firstname = firstname;
-    this.lastname = lastname;
-    this.nickname = nickname;
-    this.company = company;
-    this.address = address;
-    this.mobilephone = mobilephone;
-    this.group = group;
+    return this;
   }
 
+  public ContactData withLastname(String lastname) {
+    this.lastname = lastname;
+    return this;
+  }
 
-  public void setId(int id) {
-    this.id = id;
+  public ContactData withNickname(String nickname) {
+    this.nickname = nickname;
+    return this;
+  }
+
+  public ContactData withCompany(String company) {
+    this.company = company;
+    return this;
+  }
+
+  public ContactData withAddress(String address) {
+    this.address = address;
+    return this;
+  }
+
+  public ContactData withMobilephone(String mobilephone) {
+    this.mobilephone = mobilephone;
+    return this;
+  }
+
+  public ContactData withGroup(String group) {
+    this.group = group;
+    return this;
   }
 
   @Override
@@ -69,16 +82,6 @@ public class ContactData {
             '}';
   }
 
-  public ContactData(int id, String firstname, String lastname, String nickname, String company, String address, String mobilephone, String group) {
-    this.id = id;
-    this.firstname = firstname;
-    this.lastname = lastname;
-    this.nickname = nickname;
-    this.company = company;
-    this.address = address;
-    this.mobilephone = mobilephone;
-    this.group = group;
-  }
 
   public int getId() {
     return id;
