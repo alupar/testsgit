@@ -11,16 +11,11 @@ public class ContactData {
   private String mobilephone;
   private String workphone;
   private String allPhones;
+  private String firstemail;
+  private String secondemail;
+  private String thirdemail;
+  private String allemails;
   private String group;
-
-  public String getAllPhones() {
-    return allPhones;
-  }
-
-  public ContactData withAllPhones(String allPhones) {
-    this.allPhones = allPhones;
-    return this;
-  }
 
   public ContactData withId(int id) {
     this.id = id;
@@ -67,6 +62,31 @@ public class ContactData {
     return this;
   }
 
+  public ContactData withAllPhones(String allPhones) {
+    this.allPhones = allPhones;
+    return this;
+  }
+
+  public ContactData withFirstemail(String firstemail) {
+    this.firstemail = firstemail;
+    return this;
+  }
+
+  public ContactData withSecondemail(String secondemail) {
+    this.secondemail = secondemail;
+    return this;
+  }
+
+  public ContactData withThirdemail(String thirdemail) {
+    this.thirdemail = thirdemail;
+    return this;
+  }
+
+  public ContactData withAllemails(String allEmails) {
+    this.allemails = allEmails;
+    return this;
+  }
+
   public ContactData withGroup(String group) {
     this.group = group;
     return this;
@@ -84,6 +104,11 @@ public class ContactData {
             ", homephone='" + homephone + '\'' +
             ", mobilephone='" + mobilephone + '\'' +
             ", workphone='" + workphone + '\'' +
+            ", allPhones='" + allPhones + '\'' +
+            ", firstemail='" + firstemail + '\'' +
+            ", secondemail='" + secondemail + '\'' +
+            ", thirdemail='" + thirdemail + '\'' +
+            ", allemails='" + allemails + '\'' +
             ", group='" + group + '\'' +
             '}';
   }
@@ -121,12 +146,32 @@ public class ContactData {
     return mobilephone;
   }
 
+  public String getAllPhones() {
+    return allPhones;
+  }
+
   public String getWorkphone() {
     return workphone;
   }
 
   public String getGroup() {
     return group;
+  }
+
+  public String getFirstemail() {
+    return firstemail;
+  }
+
+  public String getSecondemail() {
+    return secondemail;
+  }
+
+  public String getThirdemail() {
+    return thirdemail;
+  }
+
+  public String getAllemails() {
+    return allemails;
   }
 
   @Override
