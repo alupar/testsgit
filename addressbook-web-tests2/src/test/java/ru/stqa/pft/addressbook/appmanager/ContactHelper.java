@@ -39,9 +39,10 @@ public class ContactHelper extends HelperBase {
     type(By.name("mobile"), contactData.getMobilephone());
     type1(By.name("photo"),contactData.getPhoto().getAbsolutePath());
 
-    if (creation){
+    String group1 = contactData.getGroup();
+    if (creation && group1 != null){
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-    } else {
+    } else if (group1 != null){
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
 
