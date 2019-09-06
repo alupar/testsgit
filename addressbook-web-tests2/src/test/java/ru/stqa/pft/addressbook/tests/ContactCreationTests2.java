@@ -1,5 +1,5 @@
 package ru.stqa.pft.addressbook.tests;
-
+import java.io.File;
 import org.testng.annotations.*;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
@@ -12,8 +12,10 @@ public class ContactCreationTests2 extends TestBase {
 
   @Test
   public void testContactCreation() throws Exception {
+    File photo = new File("src/test/resources/test1.png");
+
     Contacts before = app.contact().all();
-    ContactData contact = new ContactData().withFirstname("first2").withLastname("last2").withNickname("nick2").withCompany("company2").withAddress("address2").withMobilephone("12345").withGroup("test111");
+    ContactData contact = new ContactData().withFirstname("first2").withLastname("last2").withNickname("nick2").withCompany("company2").withAddress("address2").withMobilephone("12345").withPhoto(photo);
     app.contact().create(contact);
     Contacts after = app.contact().all();
     assertThat(after.size(), equalTo(before.size() + 1));
