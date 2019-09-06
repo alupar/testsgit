@@ -8,6 +8,7 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
+import java.io.File;
 import java.util.List;
 import java.util.Set;
 
@@ -33,10 +34,10 @@ public class ContactHelper extends HelperBase {
     type(By.name("firstname"), contactData.getFirstname());
     type(By.name("lastname"), contactData.getLastname());
     type(By.name("nickname"), contactData.getNickname());
-    type(By.name("photo"), contactData.getPhoto().getAbsolutePath());
     type(By.name("company"), contactData.getCompany());
     type(By.name("address"), contactData.getAddress());
     type(By.name("mobile"), contactData.getMobilephone());
+    type1(By.name("photo"),contactData.getPhoto().getAbsolutePath());
 
     if (creation){
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
@@ -44,6 +45,16 @@ public class ContactHelper extends HelperBase {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
 
+  }
+
+  protected void type1(By locator, String text) {
+    if (text != null){
+      String existingText = wd.findElement(locator).getAttribute("value");
+      if (!text.equals(existingText)){
+        wd.findElement(locator).clear();
+        wd.findElement(locator).sendKeys(text);
+      }
+    }
   }
 
   public void gotoContactCreation() {

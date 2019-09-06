@@ -12,6 +12,13 @@ public class HelperBase {
     this.wd = wd;
   }
 
+  public void returnToHomePage() {
+    if (isElementPresent(By.id("maintable"))){
+      return;
+    }
+    click(By.linkText("home"));
+  }
+
   protected void click(By locator) {
     wd.findElement(locator).click();
   }
@@ -24,7 +31,6 @@ public class HelperBase {
         wd.findElement(locator).clear();
         wd.findElement(locator).sendKeys(text);
       }
-
     }
   }
 
