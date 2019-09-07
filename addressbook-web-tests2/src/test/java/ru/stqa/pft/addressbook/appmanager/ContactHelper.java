@@ -34,7 +34,7 @@ public class ContactHelper extends HelperBase {
     type(By.name("firstname"), contactData.getFirstname());
     type(By.name("lastname"), contactData.getLastname());
     type(By.name("nickname"), contactData.getNickname());
-    type1(By.name("photo"),contactData.getPhoto().getAbsolutePath());
+    attach(By.name("photo"),contactData.getPhoto());
     type(By.name("company"), contactData.getCompany());
     type(By.name("address"), contactData.getAddress());
     type(By.name("mobile"), contactData.getMobilephone());
@@ -51,15 +51,7 @@ public class ContactHelper extends HelperBase {
 
   }
 
-  protected void type1(By locator, String text) {
-    if (text != null){
-      String existingText = wd.findElement(locator).getAttribute("value");
-      if (!text.equals(existingText)){
-        wd.findElement(locator).clear();
-        wd.findElement(locator).sendKeys(text);
-      }
-    }
-  }
+
 
   public void gotoContactCreation() {
     click(By.linkText("add new"));

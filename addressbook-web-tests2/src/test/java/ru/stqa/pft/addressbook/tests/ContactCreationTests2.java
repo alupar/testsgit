@@ -12,7 +12,7 @@ public class ContactCreationTests2 extends TestBase {
 
   @Test
   public void testContactCreation() throws Exception {
-    File photo = new File("src/test/resources/test1.png");
+    File photo = new File("src/test/resources/test.jpg");
 
     Contacts before = app.contact().all();
     ContactData contact = new ContactData().withFirstname("first2").withLastname("last2").withNickname("nick2").withCompany("company2").withAddress("address2").withMobilephone("12345").withPhoto(photo);

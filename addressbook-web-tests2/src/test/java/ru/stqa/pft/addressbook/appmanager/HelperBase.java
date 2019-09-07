@@ -1,5 +1,5 @@
 package ru.stqa.pft.addressbook.appmanager;
-
+import java.io.File;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
@@ -34,6 +34,11 @@ public class HelperBase {
     }
   }
 
+  protected void attach(By locator, File file) {
+    if (file != null){
+        wd.findElement(locator).sendKeys(file.getAbsolutePath());
+    }
+  }
 
   private boolean isAlertPresent() {
     try {
