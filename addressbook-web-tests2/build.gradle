@@ -10,4 +10,5 @@ dependencies {
     compile("org.seleniumhq.selenium:selenium-java:4.0.0-alpha-2")
     compile("org.hamcrest:hamcrest:2.1")
     compile("com.beust:jcommander:1.78")
+    compile("com.thoughtworks.xstream:xstream:1.4.11.1")
 }
