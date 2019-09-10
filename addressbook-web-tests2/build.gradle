@@ -11,4 +11,5 @@ dependencies {
     compile("org.hamcrest:hamcrest:2.1")
     compile("com.beust:jcommander:1.78")
     compile("com.thoughtworks.xstream:xstream:1.4.11.1")
+    compile("com.google.code.gson:gson:2.8.5")
 }
