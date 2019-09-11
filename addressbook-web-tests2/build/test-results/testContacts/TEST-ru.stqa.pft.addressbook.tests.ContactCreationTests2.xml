@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.stqa.pft.addressbook.tests.ContactCreationTests2" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-09-11T19:04:05" hostname="DESKTOP-MAF5J3C" time="22.298">
+  <properties/>
+  <testcase name="testContactCreation[0](ContactData{id=0, firstname='first 0', lastname='last 0', nickname='nick 0', company='company 0', address='address 0', homephone='12345 0', mobilephone='222 0', workphone='333 0', allPhones='null', firstemail='a@a.ru 0', secondemail='b@b.ru 0', thirdemail='c@c.ru 0', allemails='null', group='null'})" classname="ru.stqa.pft.addressbook.tests.ContactCreationTests2" time="7.328"/>
+  <testcase name="testContactCreation[1](ContactData{id=0, firstname='first 1', lastname='last 1', nickname='nick 1', company='company 1', address='address 1', homephone='12345 1', mobilephone='222 1', workphone='333 1', allPhones='null', firstemail='a@a.ru 1', secondemail='b@b.ru 1', thirdemail='c@c.ru 1', allemails='null', group='null'})" classname="ru.stqa.pft.addressbook.tests.ContactCreationTests2" time="7.321"/>
+  <testcase name="testContactCreation[2](ContactData{id=0, firstname='first 2', lastname='last 2', nickname='nick 2', company='company 2', address='address 2', homephone='12345 2', mobilephone='222 2', workphone='333 2', allPhones='null', firstemail='a@a.ru 2', secondemail='b@b.ru 2', thirdemail='c@c.ru 2', allemails='null', group='null'})" classname="ru.stqa.pft.addressbook.tests.ContactCreationTests2" time="7.648"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Security framework of XStream not initialized, XStream is probably vulnerable.
+]]></system-err>
+</testsuite>
