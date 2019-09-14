@@ -2,10 +2,14 @@
 
 <!--~ Hibernate, Relational Persistence for Idiomatic Java~~ License: GNU Lesser General Public License (LGPL), version 2.1 or later.~ See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>. -->
 
-<!DOCTYPE hibernate-configuration SYSTEM "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd" PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN">
-        -<hibernate-configuration>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
-    -<session-factory>
+<hibernate-configuration>
+
+    <session-factory>
+
 
     <!-- Database connection settings -->
     <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
