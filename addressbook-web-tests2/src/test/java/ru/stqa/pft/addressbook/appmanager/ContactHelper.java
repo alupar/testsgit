@@ -82,7 +82,7 @@ public class ContactHelper extends HelperBase {
     returnToHomePage();
   }
 
-  public void modify(Set<ContactData> before, ContactData contact) {
+  public void modify(ContactData contact) {
     returnToHomePage();
     initContactModificationById(contact.getId());
     fillContactForm(contact, false);
