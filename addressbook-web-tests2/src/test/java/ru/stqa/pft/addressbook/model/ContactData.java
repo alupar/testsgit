@@ -1,10 +1,10 @@
 package ru.stqa.pft.addressbook.model;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "addressbook")
@@ -60,12 +60,14 @@ public class ContactData {
   @Transient
   private String allemails;
 
-  @Transient
-  private String group;
-
   @Column(name = "photo")
   @Type(type = "text")
   private String photo;
+
+  @ManyToMany
+  @JoinTable(name = "address_in_groups",
+          joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+  private Set<GroupData> groups = new HashSet<GroupData>();
 
   @Override
   public boolean equals(Object o) {
@@ -192,12 +194,6 @@ public class ContactData {
     return this;
   }
 
-  public ContactData withGroup(String group) {
-    this.group = group;
-    return this;
-  }
-
-
   public int getId() {
     return id;
   }
@@ -238,8 +234,8 @@ public class ContactData {
     return workphone;
   }
 
-  public String getGroup() {
-    return group;
+  public String getGroups() {
+    return new Groups(groups);
   }
 
   public String getFirstemail() {
