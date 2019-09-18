@@ -1,5 +1,6 @@
 <list>
-  <contact>
+  <ru.stqa.pft.addressbook.model.ContactData>
+    <id>2147483647</id>
     <firstname>first 0</firstname>
     <lastname>last 0</lastname>
     <nickname>nick 0</nickname>
@@ -11,8 +12,9 @@
     <firstemail>a@a.ru 0</firstemail>
     <secondemail>b@b.ru 0</secondemail>
     <thirdemail>c@c.ru 0</thirdemail>
-  </contact>
-  <contact>
+  </ru.stqa.pft.addressbook.model.ContactData>
+  <ru.stqa.pft.addressbook.model.ContactData>
+    <id>2147483647</id>
     <firstname>first 1</firstname>
     <lastname>last 1</lastname>
     <nickname>nick 1</nickname>
@@ -24,8 +26,9 @@
     <firstemail>a@a.ru 1</firstemail>
     <secondemail>b@b.ru 1</secondemail>
     <thirdemail>c@c.ru 1</thirdemail>
-  </contact>
-  <contact>
+  </ru.stqa.pft.addressbook.model.ContactData>
+  <ru.stqa.pft.addressbook.model.ContactData>
+    <id>2147483647</id>
     <firstname>first 2</firstname>
     <lastname>last 2</lastname>
     <nickname>nick 2</nickname>
@@ -37,5 +40,5 @@
     <firstemail>a@a.ru 2</firstemail>
     <secondemail>b@b.ru 2</secondemail>
     <thirdemail>c@c.ru 2</thirdemail>
-  </contact>
+  </ru.stqa.pft.addressbook.model.ContactData>
 </list>
