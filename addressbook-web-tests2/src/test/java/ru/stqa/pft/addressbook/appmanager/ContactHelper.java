@@ -50,15 +50,14 @@ public class ContactHelper extends HelperBase {
     if (creation){
       if (group1.size() != 0) {
         GroupData selectedGroup = group1.iterator().next();
-        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(selectedGroup.getName());
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
+ //       new Select(wd.findElement(By.name("new_group"))).selectByIndex(selectedGroup.getId());
       }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }
 
   }
-
-
 
   public void gotoContactCreation() {
     click(By.linkText("add new"));
