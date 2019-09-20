@@ -39,13 +39,17 @@ public class ContactHelper extends HelperBase {
     attach(By.name("photo"),contactData.getPhoto());
     type(By.name("company"), contactData.getCompany());
     type(By.name("address"), contactData.getAddress());
+    type(By.name("home"), contactData.getHomephone());
     type(By.name("mobile"), contactData.getMobilephone());
-
+    type(By.name("work"), contactData.getWorkphone());
+    type(By.name("email"), contactData.getFirstemail());
+    type(By.name("email2"), contactData.getSecondemail());
+    type(By.name("email3"), contactData.getThirdemail());
 
     Set<GroupData> group1 = contactData.getGroups();
-    GroupData selectedGroup = group1.iterator().next();
     if (creation){
       if (group1.size() != 0) {
+        GroupData selectedGroup = group1.iterator().next();
         new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(selectedGroup.getName());
       }
     } else {
