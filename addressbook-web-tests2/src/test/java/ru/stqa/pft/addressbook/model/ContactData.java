@@ -234,8 +234,8 @@ public class ContactData {
     return workphone;
   }
 
-  public String getGroups() {
-    return String.valueOf(groups);
+  public Set<GroupData> getGroups() {
+    return groups;
   }
 
   public String getFirstemail() {

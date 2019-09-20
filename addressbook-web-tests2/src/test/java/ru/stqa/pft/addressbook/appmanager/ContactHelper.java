@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.File;
@@ -41,10 +42,11 @@ public class ContactHelper extends HelperBase {
     type(By.name("mobile"), contactData.getMobilephone());
 
 
-    String group1 = contactData.getGroups();
+    Set<GroupData> group1 = contactData.getGroups();
+    GroupData selectedGroup = group1.iterator().next();
     if (creation){
-      if (group1 != null) {
-        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups());
+      if (group1.size() != 0) {
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(selectedGroup.getName());
       }
     } else {
       Assert.assertFalse(isElementPresent(By.name("new_group")));
