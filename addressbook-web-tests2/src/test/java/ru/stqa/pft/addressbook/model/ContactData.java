@@ -235,7 +235,7 @@ public class ContactData {
   }
 
   public String getGroups() {
-    return new Groups(groups);
+    return String.valueOf(groups);
   }
 
   public String getFirstemail() {
