@@ -254,6 +254,11 @@ public class ContactData {
     return allemails;
   }
 
+  private Object readResolve() {
+    groups = new HashSet<GroupData>();
+    return this;
+  }
+
   @Override
   public String toString() {
     return "ContactData{" +
