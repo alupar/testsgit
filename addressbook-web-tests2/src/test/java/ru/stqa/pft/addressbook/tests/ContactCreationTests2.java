@@ -7,6 +7,7 @@ import org.testng.annotations.*;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class ContactCreationTests2 extends TestBase {
   @Test(dataProvider = "validContacts")
   public void testContactCreation(ContactData contact) throws Exception {
     File photo = new File("src/test/resources/test.jpg");
-
+    Groups groups = app.db().groups();
 
     app.goTo().returnToHomePage();
     Contacts before = app.db().contacts();

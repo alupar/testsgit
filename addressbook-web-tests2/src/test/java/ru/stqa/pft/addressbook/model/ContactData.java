@@ -144,6 +144,10 @@ public class ContactData {
     return this;
   }
 
+  public void withGroups(Set<GroupData> groups) {
+    this.groups = groups;
+  }
+
   public ContactData withCompany(String company) {
     this.company = company;
     return this;
@@ -266,5 +270,10 @@ public class ContactData {
             ", firstname='" + firstname + '\'' +
             ", lastname='" + lastname + '\'' +
             '}';
+  }
+
+  public ContactData inGroup(GroupData group) {
+    groups.add(group);
+    return this;
   }
 }
