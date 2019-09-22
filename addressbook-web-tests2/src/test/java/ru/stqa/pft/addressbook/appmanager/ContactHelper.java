@@ -77,6 +77,11 @@ public class ContactHelper extends HelperBase {
     wd.findElement(By.cssSelector("div.msgbox"));
   }
 
+  private void deleteSelectedContactFromGroup(ContactData contact, GroupData group) {
+    click(By.xpath("//input[@name='remove']"));
+    wd.findElement(By.cssSelector("div.msgbox"));
+  }
+
   public void selectContactById(int id) {
     wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
   }
@@ -107,6 +112,13 @@ public class ContactHelper extends HelperBase {
   public void addtogroup(ContactData contact) {
     selectContactById(contact.getId());
     addSelectedContactToGroup(contact);
+    returnToHomePage();
+  }
+
+  public void removefromgroup(ContactData contact, GroupData group) {
+    new Select(wd.findElement(By.name("group"))).selectByIndex(group.getId());
+    selectContactById(contact.getId());
+    deleteSelectedContactFromGroup(contact, group);
     returnToHomePage();
   }
 
@@ -158,5 +170,6 @@ public class ContactHelper extends HelperBase {
             .withHomephone(home).withMobilephone(mobile).withWorkphone(work)
             .withFirstemail(firstmail).withSecondemail(secondmail).withThirdemail(thirdmail);
   }
+
 
 }
