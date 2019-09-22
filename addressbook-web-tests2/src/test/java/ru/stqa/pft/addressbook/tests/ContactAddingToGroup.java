@@ -33,8 +33,10 @@ public class ContactAddingToGroup extends TestBase {
     Contacts before = app.db().contacts();
     ContactData addedContact = before.iterator().next();
     ContactData contact = new ContactData().withId(addedContact.getId()).inGroup(groups.iterator().next());
-    app.contact().addtogroup(contact);
-    Contacts after = app.db().contacts();
-    assertEquals(after.size(), before.size());
+    if(contact.getGroups().size()!=app.db().groups().size()) {
+      app.contact().addtogroup(contact);
+      Contacts after = app.db().contacts();
+      assertEquals(after.size(), before.size());
+    }
   }
 }

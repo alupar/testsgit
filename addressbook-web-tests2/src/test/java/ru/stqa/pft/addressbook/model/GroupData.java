@@ -22,10 +22,6 @@ public class GroupData {
   @Column(name = "group_name")
   private String name;
 
-  public Set<ContactData> getContacts() {
-    return new Contacts(contacts);
-  }
-
   @ManyToMany(mappedBy = "groups")
   private Set<ContactData> contacts = new HashSet<ContactData>();
 
@@ -87,6 +83,10 @@ public class GroupData {
 
   public String getName() {
     return name;
+  }
+
+  public Set<ContactData> getContacts() {
+    return new Contacts(contacts);
   }
 
   @Override
