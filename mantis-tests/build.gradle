@@ -12,9 +12,9 @@ dependencies {
 
 }
 
-test{
+task testMantis (type: Test){
     useTestNG{
-        suites 'src/test/resources/testng.xml'
+        suites 'src/test/resources/testng-mantis.xml'
     }
 
     if (project.hasProperty('browser')) {
