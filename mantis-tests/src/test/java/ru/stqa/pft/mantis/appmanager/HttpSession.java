@@ -35,7 +35,7 @@ public class HttpSession {
     post.setEntity(new UrlEncodedFormEntity(params));
     CloseableHttpResponse response = httpclient.execute(post);
     String body = getTextFrom(response);
-    return body.contains(String.format("<span class=\"italic\">%s</span>"));
+    return body.contains(String.format("<span class=\"italic\">%s</span>", username));
   }
 
   private String getTextFrom(CloseableHttpResponse response) throws IOException{
