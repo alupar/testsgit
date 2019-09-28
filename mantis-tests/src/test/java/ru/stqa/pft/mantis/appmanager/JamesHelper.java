@@ -37,7 +37,7 @@ public class JamesHelper {
 
   public void createUser(String name, String passwd){
     initTelnetSession();
-    write("adduser " + name + " added");
+    write("adduser " + name + "" + passwd);
     String result = readUntil("User " + name + " added");
     closeTelnetSession();
   }
