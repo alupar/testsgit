@@ -238,8 +238,8 @@ public class ContactData {
     return workphone;
   }
 
-  public Set<GroupData> getGroups() {
-    return groups;
+  public Groups getGroups() {
+    return new Groups(groups);
   }
 
   public String getFirstemail() {
