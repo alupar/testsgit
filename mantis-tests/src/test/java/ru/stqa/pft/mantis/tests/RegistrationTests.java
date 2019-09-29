@@ -19,7 +19,7 @@ public class RegistrationTests extends TestBase{
   @Test
   public void testRegistration() throws IOException, MessagingException {
     long now = System.currentTimeMillis();
-    String email = String.format("user%s@localhost.localdomain", now);
+    String email = String.format("user%s@localhost", now);
     String user = String.format("user%s", now);
     String password = "password";
 
@@ -28,6 +28,7 @@ public class RegistrationTests extends TestBase{
  //   List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
     List<MailMessage> mailMessages = app.james().waitForMail(user, password, 60000);
     String confirmationLink = findConfirmationLink(mailMessages, email);
+    System.out.println(confirmationLink);
     app.registration().finish(confirmationLink, password, user);
     assertTrue(app.newSession().login(user,password));
   }
