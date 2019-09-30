@@ -12,19 +12,24 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.util.Set;
 
-import static org.testng.Assert.assertEquals;
+public class IfIssueFixedTests  extends TestBase{
 
-public class RestTests {
   @Test
-  public void testCreateIssue() throws IOException {
-    Set<Issue> oldIssues = getIssues();
+  public void testFixedIssue() throws IOException {
     Issue newIssue = new Issue().withSubject("Test issue").withDescription("New test issue");
     int issueId = createIssue(newIssue);
-    System.out.println("Created issue " + issueId);
-    Set<Issue> newIssues = getIssues();
-    oldIssues.add(newIssue.withId(issueId));
-    assertEquals(newIssues, oldIssues);
+    Issue fixedIssue = new Issue().withId(issueId);
+    boolean isFixed = fixIssue(fixedIssue);
+    skipIfNotFixed(issueId);
   }
+
+  @Test
+  public void testNotFixedIssue() throws IOException {
+    Issue newIssue = new Issue().withSubject("Test issue").withDescription("New test issue");
+    int issueId = createIssue(newIssue);
+    skipIfNotFixed(issueId);
+  }
+
 
   private Set<Issue> getIssues() throws IOException {
     String json = getExecutor().execute(Request.Get("https://bugify.stqa.ru/api/issues.json?limit=500"))
@@ -45,5 +50,20 @@ public class RestTests {
             .returnContent().asString();
     JsonElement parsed = new JsonParser().parse(json);
     return parsed.getAsJsonObject().get("issue_id").getAsInt();
+  }
+
+  private boolean fixIssue(Issue fixedIssue) throws IOException {
+    int issueId1 = fixedIssue.getId();
+    String json = getExecutor().execute(Request.Post("https://bugify.stqa.ru/api/issues" + issueId1 + ".json")
+            .bodyForm(new BasicNameValuePair("method", "update"),
+                    new BasicNameValuePair("issue%5Bstate%5D", "2")))
+            .returnContent().asString();
+    JsonElement parsed = new JsonParser().parse(json);
+    int state = parsed.getAsJsonObject().get("state").getAsInt();
+    if (state == 2){
+      return true;
+    } else {
+      return false;
+    }
   }
 }
