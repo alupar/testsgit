@@ -28,7 +28,9 @@ public class ContactRemoveFromGroup extends TestBase {
     Groups groups = app.db().groups();
     Contacts before = app.db().contacts();
     ContactData removedContact = before.iterator().next();
-    ContactData contact = new ContactData().withId(removedContact.getId()).inGroup(groups.iterator().next());
+    ContactData contact = new ContactData().withId(removedContact.getId());
+ //   ContactData contact = new ContactData().withId(removedContact.getId()).inGroup(groups.iterator().next());
+    int size = contact.getGroups().size();
     if(contact.getGroups().size() == 0){
       app.contact().addtogroup(contact);
     }
