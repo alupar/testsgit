@@ -3,8 +3,6 @@
     <id>2147483647</id>
     <firstname>first 0</firstname>
     <lastname>last 0</lastname>
-    <nickname>nick 0</nickname>
-    <company>company 0</company>
     <address>address 0</address>
     <homephone>12345 0</homephone>
     <mobilephone>222 0</mobilephone>
@@ -17,8 +15,6 @@
     <id>2147483647</id>
     <firstname>first 1</firstname>
     <lastname>last 1</lastname>
-    <nickname>nick 1</nickname>
-    <company>company 1</company>
     <address>address 1</address>
     <homephone>12345 1</homephone>
     <mobilephone>222 1</mobilephone>
@@ -31,8 +27,6 @@
     <id>2147483647</id>
     <firstname>first 2</firstname>
     <lastname>last 2</lastname>
-    <nickname>nick 2</nickname>
-    <company>company 2</company>
     <address>address 2</address>
     <homephone>12345 2</homephone>
     <mobilephone>222 2</mobilephone>
