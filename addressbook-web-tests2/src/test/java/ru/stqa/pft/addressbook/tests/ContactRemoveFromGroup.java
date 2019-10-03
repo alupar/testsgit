@@ -29,14 +29,11 @@ public class ContactRemoveFromGroup extends TestBase {
     Contacts before = app.db().contacts();
     ContactData removedContact = before.iterator().next();
     ContactData contact = new ContactData().withId(removedContact.getId());
- //   ContactData contact = new ContactData().withId(removedContact.getId()).inGroup(groups.iterator().next());
-    int size = contact.getGroups().size();
+
     if(contact.getGroups().size() == 0){
-      app.contact().addtogroup(contact);
+      app.contact().addtogroup(removedContact, groups);
     }
-    Groups contactgroups = (Groups) contact.getGroups();
-    GroupData groupToRemove = contactgroups.iterator().next();
-    GroupData group = new GroupData().withId(groupToRemove.getId());
-    app.contact().removefromgroup(contact, group);
+
+    app.contact().removefromgroup(removedContact, groups);
     }
 }

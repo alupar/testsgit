@@ -10,6 +10,7 @@ import ru.stqa.pft.addressbook.model.Groups;
 import static org.testng.Assert.assertEquals;
 
 public class ContactAddingToGroup extends TestBase {
+
   @BeforeMethod
   public void ensurePreconditions(){
     app.contact().returnToHomePage();
@@ -27,15 +28,17 @@ public class ContactAddingToGroup extends TestBase {
 
   @Test
   public void testContactAddingToGroup(){
-    Groups groups = app.db().groups();
+    Groups allgroups = app.db().groups();
     Contacts before = app.db().contacts();
     ContactData addedContact = before.iterator().next();
     ContactData contact = new ContactData().withId(addedContact.getId());
-//    ContactData contact = new ContactData().withId(addedContact.getId()).inGroup(groups.iterator().next());
-    if(contact.getGroups().size()!=app.db().groups().size()) {
-      app.contact().addtogroup(contact);
+
+    if(contact.getGroups().size() != app.db().groups().size()) {
+      app.contact().addtogroup(addedContact, allgroups);
       Contacts after = app.db().contacts();
       assertEquals(after.size(), before.size());
     }
+
   }
 }
+

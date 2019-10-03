@@ -8,6 +8,7 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.List;
 import java.util.Set;
@@ -68,8 +69,8 @@ public class ContactHelper extends HelperBase {
     wd.findElement(By.cssSelector("div.msgbox"));
   }
 
-  public void addSelectedContactToGroup(ContactData contactData) {
-    new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
+  public void addSelectedContactToGroup(ContactData contact, GroupData group1) {
+    new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group1.getName());
     click(By.xpath("//input[@value='Add to']"));
 //    wd.switchTo().alert().accept();
     wd.findElement(By.cssSelector("div.msgbox"));
@@ -107,17 +108,39 @@ public class ContactHelper extends HelperBase {
     returnToHomePage();
   }
 
-  public void addtogroup(ContactData contact) {
+  public void addtogroup(ContactData contact, Groups allgroups) {
     selectContactById(contact.getId());
-    addSelectedContactToGroup(contact);
+    Groups contactgroups = contact.getGroups();
+    GroupData group1 = new GroupData();
+
+    for (GroupData togroup : allgroups){
+      group1 = togroup;
+      boolean isany = contactgroups.stream().anyMatch(togroup :: equals);
+      if(isany == false) break;
+    }
+
+    if(contact.getGroups().size() != allgroups.size()) {
+      addSelectedContactToGroup(contact, group1);
+      System.out.println("Added contact " + contact.getId() + " to a group " + group1.getId() + " " + group1.getName());
+    }
     returnToHomePage();
   }
 
-  public void removefromgroup(ContactData contact, GroupData group) {
-    new Select(wd.findElement(By.name("group"))).selectByIndex(group.getId());
+  public void removefromgroup(ContactData contact, Groups allgroups) {
     selectContactById(contact.getId());
-    deleteSelectedContactFromGroup(contact, group);
+    Groups contactgroups = contact.getGroups();
+    GroupData group1 = new GroupData();
+
+    for (GroupData togroup : allgroups){
+      group1 = togroup;
+      boolean isany = contactgroups.stream().anyMatch(togroup :: equals);
+      if(isany == true) break;
+    }
+
+    new Select(wd.findElement(By.name("group"))).selectByVisibleText(group1.getName());
+    deleteSelectedContactFromGroup(contact, group1);
     returnToHomePage();
+    System.out.println("Removed contact " + contact.getId() + " from a group " + group1.getId() + " " + group1.getName());
   }
 
   public void delete(ContactData contact) {
