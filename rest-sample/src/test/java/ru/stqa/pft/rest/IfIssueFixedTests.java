@@ -46,10 +46,8 @@ public void getIssueId() throws IOException {
 
   @Test()
   private void testGetSkipIssues() throws IOException {
-    String state = getIssueState(myid1);
-    if (state != "fixed") {
+      System.out.println("Id = " + myid1);
       skipIfNotFixed(myid1);
-    }
   }
 
   @Test
