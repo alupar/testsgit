@@ -1,12 +1,14 @@
 package ru.stqa.pft.rest;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.message.BasicNameValuePair;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -14,13 +16,40 @@ import java.util.Set;
 
 public class IfIssueFixedTests  extends TestBase{
 
+  private int myid1;
+
+  //  @Test
+//  public void testFixedIssue() throws IOException {
+//    Issue newIssue = new Issue().withSubject("Test issue").withDescription("New test issue");
+//    int issueId = createIssue(newIssue);
+//    Issue fixedIssue = new Issue().withId(issueId);
+//    boolean isFixed = fixIssue(fixedIssue);
+//    skipIfNotFixed(issueId);
+//  }
+@BeforeMethod
+public void getIssueId() throws IOException {
+  Set<Issue> Issues = getIssues();
+  Issue myissue1 = Issues.iterator().next();
+  myid1 = myissue1.getId();
+}
+
+
   @Test
-  public void testFixedIssue() throws IOException {
-    Issue newIssue = new Issue().withSubject("Test issue").withDescription("New test issue");
-    int issueId = createIssue(newIssue);
-    Issue fixedIssue = new Issue().withId(issueId);
-    boolean isFixed = fixIssue(fixedIssue);
-    skipIfNotFixed(issueId);
+  public void testGetStatusIssues() throws IOException {
+    Set<Issue> Issues = getIssues();
+    for (Issue myissue : Issues){
+      int issueid = myissue.getId();
+      String state = getIssueState(issueid);
+      System.out.println("Status of the issue " + issueid + " = " + state);
+    }
+  }
+
+  @Test()
+  private void testGetSkipIssues() throws IOException {
+    String state = getIssueState(myid1);
+    if (state != "fixed") {
+      skipIfNotFixed(myid1);
+    }
   }
 
   @Test
@@ -30,6 +59,20 @@ public class IfIssueFixedTests  extends TestBase{
     skipIfNotFixed(issueId);
   }
 
+  private String getIssueState(int issueid) throws IOException {
+    String json = getExecutor().execute(Request.Get(String.format("https://bugify.stqa.ru/api/issues/%d.json", issueid)))
+            .returnContent().asString();
+    JsonElement parsed = new JsonParser().parse(json);
+    JsonElement issues = parsed.getAsJsonObject().get("issues");
+    JsonArray issues1 = issues.getAsJsonArray();
+    String state_name = null;
+
+    for (JsonElement issue1 : issues1 ){
+      state_name = issue1.getAsJsonObject().get("state_name").getAsString();
+    }
+
+    return state_name;
+  }
 
   private Set<Issue> getIssues() throws IOException {
     String json = getExecutor().execute(Request.Get("https://bugify.stqa.ru/api/issues.json?limit=500"))
