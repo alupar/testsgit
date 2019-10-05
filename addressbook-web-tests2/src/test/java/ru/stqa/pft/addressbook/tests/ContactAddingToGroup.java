@@ -30,15 +30,27 @@ public class ContactAddingToGroup extends TestBase {
   public void testContactAddingToGroup(){
     Groups allgroups = app.db().groups();
     Contacts before = app.db().contacts();
-    ContactData addedContact = before.iterator().next();
-    ContactData contact = new ContactData().withId(addedContact.getId());
+    GroupData groupToAdd = allgroups.iterator().next();
 
-    if(contact.getGroups().size() != app.db().groups().size()) {
-      app.contact().addtogroup(addedContact, allgroups);
-      Contacts after = app.db().contacts();
-      assertEquals(after.size(), before.size());
+    for (ContactData addedContact : before){
+      Groups contactGroups = addedContact.getGroups();
+      int i = 0;
+      for (GroupData groupOfContact : contactGroups) {
+        if (groupOfContact.getId() != groupToAdd.getId()) {
+          i++;
+        }else break;
+      }
+      if (i == contactGroups.size()){
+        int size1 = addedContact.getGroups().size();
+        Groups group1 = addedContact.getGroups();
+        app.contact().addtogroup(addedContact, groupToAdd);
+        int size2 = addedContact.getGroups().size();
+        Groups group2 = addedContact.getGroups();
+        assertEquals(size1, size2);
+        assertEquals(group1, group2);
+        break;
+      }
     }
-
   }
 }
 

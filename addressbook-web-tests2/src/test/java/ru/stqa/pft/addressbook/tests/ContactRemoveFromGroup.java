@@ -7,6 +7,8 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
+import static org.testng.Assert.assertEquals;
+
 public class ContactRemoveFromGroup extends TestBase {
   @BeforeMethod
   public void ensurePreconditions(){
@@ -29,11 +31,16 @@ public class ContactRemoveFromGroup extends TestBase {
     Contacts before = app.db().contacts();
     ContactData removedContact = before.iterator().next();
     ContactData contact = new ContactData().withId(removedContact.getId());
+    Groups group1 = removedContact.getGroups();
 
     if(contact.getGroups().size() == 0){
-      app.contact().addtogroup(removedContact, groups);
+      GroupData groupToAdd = groups.iterator().next();
+      app.contact().addtogroup(removedContact, groupToAdd);
     }
 
     app.contact().removefromgroup(removedContact, groups);
+    Groups group2 = removedContact.getGroups();
+    assertEquals(group1.size(), group2.size());
+    assertEquals(group1, group2);
     }
 }
