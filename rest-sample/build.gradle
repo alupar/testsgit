@@ -13,3 +13,7 @@ dependencies {
     compile("com.jayway.restassured:rest-assured:2.9.0")
 }
 
+
+test{
+    useTestNG()
+}
