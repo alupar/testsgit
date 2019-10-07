@@ -1,10 +1,13 @@
 package ru.stqa.pft.mantis.tests;
 
 import org.openqa.selenium.remote.BrowserType;
+import org.testng.SkipException;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import ru.stqa.pft.mantis.appmanager.ApplicationManager;
+
 import java.io.File;
+import java.io.IOException;
 
 public class TestBase {
 
@@ -17,10 +20,21 @@ public class TestBase {
     app.ftp().upload(new File("src/test/resources/config_inc.php"), "config_inc.php", "config_inc.php.back");
   }
 
+  boolean isIssueOpen(int issueId) throws IOException {
+    return true;
+  }
+
   @AfterSuite(alwaysRun = true)
   public void tearDown() throws Exception {
     app.ftp().restore("config_inc.php.back", "config_inc.php");
     app.stop();
   }
 
+  public void skipIfNotFixed(int issueId) throws IOException {
+    if (isIssueOpen(issueId)) {
+      throw new SkipException("Ignored because of issue " + issueId);
+    }
+  }
+  
 }
+
