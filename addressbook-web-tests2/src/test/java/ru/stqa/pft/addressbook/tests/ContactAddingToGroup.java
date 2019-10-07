@@ -7,9 +7,14 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
 
 public class ContactAddingToGroup extends TestBase {
+
+  GroupData groupToAdd;
+  ContactData contactToAdd;
 
   @BeforeMethod
   public void ensurePreconditions(){
@@ -24,33 +29,39 @@ public class ContactAddingToGroup extends TestBase {
       app.goTo().groupPage();
       app.group().create(new GroupData().withName("test111").withFooter("footer1").withHeader("header1"));
     }
-  }
 
-  @Test
-  public void testContactAddingToGroup(){
-    Groups allgroups = app.db().groups();
-    Contacts before = app.db().contacts();
-    GroupData groupToAdd = allgroups.iterator().next();
+    groupToAdd = app.db().groups().iterator().next();
+    System.out.println("group = " + groupToAdd.getId());
 
-    for (ContactData addedContact : before){
-      Groups contactGroups = addedContact.getGroups();
+    for (ContactData contactToAdd1 : app.db().contacts()) {
+      Groups contactGroups = contactToAdd1.getGroups();
       int i = 0;
       for (GroupData groupOfContact : contactGroups) {
         if (groupOfContact.getId() != groupToAdd.getId()) {
           i++;
-        }else break;
+        } else break;
       }
-      if (i == contactGroups.size()){
-        int size1 = addedContact.getGroups().size();
-        Groups group1 = addedContact.getGroups();
-        app.contact().addtogroup(addedContact, groupToAdd);
-        int size2 = addedContact.getGroups().size();
-        Groups group2 = addedContact.getGroups();
-        assertEquals(size1, size2);
-        assertEquals(group1, group2);
-        break;
-      }
+      if (i == contactGroups.size()) break;
+      contactToAdd = contactToAdd1;
     }
+    System.out.println("contact = " + contactToAdd.getId());
+  }
+
+  @Test
+  public void testContactAddingToGroup(){
+    Groups groupsbefore = app.db().groups();
+    Contacts contactsbefore = app.db().contacts();
+
+    app.contact().addtogroup(contactToAdd, groupToAdd);
+
+    Groups groupsafter = app.db().groups();
+    Contacts contactsafter = app.db().contacts();
+
+    assertEquals(groupsbefore.size(), groupsafter.size());
+    assertEquals(contactsbefore.size(), contactsafter.size());
+    assertThat(groupsafter, equalTo(groupsbefore));
+    assertThat(contactsafter, equalTo(contactsbefore));
+
   }
 }
 

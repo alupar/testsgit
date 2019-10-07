@@ -7,6 +7,8 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
 
 public class ContactRemoveFromGroup extends TestBase {
@@ -27,20 +29,32 @@ public class ContactRemoveFromGroup extends TestBase {
 
   @Test
   public void testContactDeletionFromGroup(){
-    Groups groups = app.db().groups();
-    Contacts before = app.db().contacts();
-    ContactData removedContact = before.iterator().next();
-    ContactData contact = new ContactData().withId(removedContact.getId());
-    Groups group1 = removedContact.getGroups();
+    Groups groupsbefore = app.db().groups();
+    Contacts contactsbefore = app.db().contacts();
+    ContactData removedContact = contactsbefore.iterator().next();
 
-    if(contact.getGroups().size() == 0){
-      GroupData groupToAdd = groups.iterator().next();
+    for (ContactData removedContact1 : contactsbefore){
+      Groups contactGroups = removedContact1.getGroups();
+      if (contactGroups.size() != 0){
+        removedContact = removedContact1;
+        break;
+      }
+    }
+
+    if(removedContact.getGroups().size() == 0){
+      GroupData groupToAdd = groupsbefore.iterator().next();
       app.contact().addtogroup(removedContact, groupToAdd);
     }
 
-    app.contact().removefromgroup(removedContact, groups);
-    Groups group2 = removedContact.getGroups();
-    assertEquals(group1.size(), group2.size());
-    assertEquals(group1, group2);
+    app.contact().removefromgroup(removedContact, groupsbefore);
+
+    Groups groupsafter = app.db().groups();
+    Contacts contactsafter = app.db().contacts();
+
+    assertEquals(groupsbefore.size(), groupsafter.size());
+    assertEquals(contactsbefore.size(), contactsafter.size());
+    assertThat(groupsafter, equalTo(groupsbefore));
+    assertThat(contactsafter, equalTo(contactsbefore));
+
     }
 }
