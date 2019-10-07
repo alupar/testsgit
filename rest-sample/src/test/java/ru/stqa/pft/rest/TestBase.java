@@ -16,12 +16,11 @@ public class TestBase {
     JsonElement parsed = new JsonParser().parse(json);
     JsonElement issues = parsed.getAsJsonObject().get("issues");
     JsonArray issues1 = issues.getAsJsonArray();
-    String state_name = null;
 
-    for (JsonElement issue1 : issues1 ){
-      state_name = issue1.getAsJsonObject().get("state_name").getAsString();
-    }
-    if(state_name == "open"){
+    JsonElement issue1 = issues1.get(0);
+    String state_name = issue1.getAsJsonObject().get("state_name").getAsString();
+
+    if(state_name.equals("open")){
       return true;
     }else{
       return false;
