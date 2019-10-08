@@ -1,5 +1,7 @@
 package ru.stqa.pft.mantis.tests;
 
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.lanwen.verbalregex.VerbalExpression;
 import ru.stqa.pft.mantis.appmanager.HttpSession;
@@ -12,6 +14,7 @@ import java.util.List;
 import static org.testng.Assert.assertTrue;
 
 public class UserPwdChangeTests extends TestBase{
+  @BeforeMethod
   public void startMailServer(){
     app.mail().start();
   }
@@ -30,12 +33,15 @@ public class UserPwdChangeTests extends TestBase{
     app.usersadmin().loginAsAnybody(adminname, adminpwd);
     app.usersadmin().gotoUsersAdministration();
     app.usersadmin().selectUser(username);
-    app.james().doesUserExist(username);
+ //   app.james().doesUserExist(username);
     app.usersadmin().resetPassword();
     app.usersadmin().logout();
 
+
  //   app.james().createUser(username, password);
-    List<MailMessage> mailMessages = app.james().waitForMail(username, password, 60000);
+//    List<MailMessage> mailMessages = app.james().waitForMail(username, password, 60000);
+
+    List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
     String confirmationLink = findConfirmationLink(mailMessages, email);
     System.out.println(confirmationLink);
     app.usersadmin().finishPwdReset(confirmationLink, newpassword, username);
@@ -52,7 +58,7 @@ public class UserPwdChangeTests extends TestBase{
     return regex.getText(mailMessage.text);
   }
 
-  //  @AfterMethod(alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
   public void stopMailServer(){
     app.mail().stop();
   }
