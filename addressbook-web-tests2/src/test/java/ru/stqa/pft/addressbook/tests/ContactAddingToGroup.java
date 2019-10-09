@@ -13,8 +13,8 @@ import static org.testng.Assert.assertEquals;
 
 public class ContactAddingToGroup extends TestBase {
 
-  GroupData groupToAdd;
-  ContactData contactToAdd;
+  private int groupToAddId;
+  private int contactToAddId;
 
   @BeforeMethod
   public void ensurePreconditions(){
@@ -30,37 +30,39 @@ public class ContactAddingToGroup extends TestBase {
       app.group().create(new GroupData().withName("test111").withFooter("footer1").withHeader("header1"));
     }
 
-    groupToAdd = app.db().groups().iterator().next();
+    GroupData groupToAdd = app.db().groups().iterator().next();
+    groupToAddId = groupToAdd.getId();
     System.out.println("group = " + groupToAdd.getId());
+    Contacts allcontacts = app.db().contacts();
 
-    for (ContactData contactToAdd1 : app.db().contacts()) {
+    for (ContactData contactToAdd1 : allcontacts) {
       Groups contactGroups = contactToAdd1.getGroups();
       int i = 0;
-      for (GroupData groupOfContact : contactGroups) {
-        if (groupOfContact.getId() != groupToAdd.getId()) {
-          i++;
-        } else break;
-      }
-      if (i == contactGroups.size()) break;
-      contactToAdd = contactToAdd1;
+        for (GroupData groupOfContact : contactGroups){
+          if (groupOfContact.getId() == groupToAdd.getId()){
+            i=1;
+          }
+        }
+        if (i != 1){
+          ContactData contactToAdd = contactToAdd1;
+          contactToAddId = contactToAdd.getId();
+          System.out.println("contact = " + contactToAddId);
+          break;
+        }
     }
-    System.out.println("contact = " + contactToAdd.getId());
+    System.out.println("contact = " + contactToAddId);
   }
 
   @Test
   public void testContactAddingToGroup(){
-    Groups groupsbefore = app.db().groups();
-    Contacts contactsbefore = app.db().contacts();
+    ContactData contactToAdd = new ContactData().withId(contactToAddId);
+    GroupData groupToAdd = new GroupData().withId(groupToAddId);
 
+    Groups contactgroupsbefore = contactToAdd.getGroups();
     app.contact().addtogroup(contactToAdd, groupToAdd);
-
-    Groups groupsafter = app.db().groups();
-    Contacts contactsafter = app.db().contacts();
-
-    assertEquals(groupsbefore.size(), groupsafter.size());
-    assertEquals(contactsbefore.size(), contactsafter.size());
-    assertThat(groupsafter, equalTo(groupsbefore));
-    assertThat(contactsafter, equalTo(contactsbefore));
+    Groups contactgroupsafter = contactToAdd.getGroups();
+    assertThat(contactgroupsbefore, equalTo(contactgroupsafter.withAdded(groupToAdd)));
+    assertEquals(contactgroupsbefore.size()+1, contactgroupsafter.size());
 
   }
 }

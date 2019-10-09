@@ -70,10 +70,13 @@ public class ContactHelper extends HelperBase {
   }
 
   public void addSelectedContactToGroup(ContactData contact, GroupData group1) {
-    new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group1.getName());
+    String name = group1.getName();
+//    new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group1.getName());
+    String myvalue = String.valueOf(group1.getId());
+    new Select(wd.findElement(By.name("to_group"))).selectByValue(myvalue);
     click(By.xpath("//input[@value='Add to']"));
 //    wd.switchTo().alert().accept();
-    wd.findElement(By.cssSelector("div.msgbox"));
+ //   wd.findElement(By.cssSelector("div.msgbox"));
     System.out.println("Added contact " + contact.getId() + " to a group " + group1.getId() + " " + group1.getName());
   }
 
@@ -120,13 +123,7 @@ public class ContactHelper extends HelperBase {
   public void removefromgroup(ContactData contact, Groups allgroups) {
     selectContactById(contact.getId());
     Groups contactgroups = contact.getGroups();
-    GroupData group1 = new GroupData();
-
-    for (GroupData togroup : allgroups){
-      group1 = togroup;
-      boolean isany = contactgroups.stream().anyMatch(togroup :: equals);
-      if(isany == true) break;
-    }
+    GroupData group1 = contactgroups.iterator().next();
 
     new Select(wd.findElement(By.name("group"))).selectByVisibleText(group1.getName());
     deleteSelectedContactFromGroup(contact, group1);
