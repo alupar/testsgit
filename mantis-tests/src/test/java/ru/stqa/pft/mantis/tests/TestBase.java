@@ -1,11 +1,14 @@
 package ru.stqa.pft.mantis.tests;
 
+import biz.futureware.mantis.rpc.soap.client.ObjectRef;
 import org.openqa.selenium.remote.BrowserType;
 import org.testng.SkipException;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import ru.stqa.pft.mantis.appmanager.ApplicationManager;
+import ru.stqa.pft.mantis.model.Issue;
 
+import javax.xml.rpc.ServiceException;
 import java.io.File;
 import java.io.IOException;
 
@@ -20,8 +23,28 @@ public class TestBase {
     app.ftp().upload(new File("src/test/resources/config_inc.php"), "config_inc.php", "config_inc.php.back");
   }
 
-  boolean isIssueOpen(int issueId) throws IOException {
-    return true;
+  boolean isIssueNotFixed(int issueId) throws IOException, ServiceException {
+    Issue testIssue = app.soap().getIssue(issueId);
+    ObjectRef issuestatus = testIssue.getStatus();
+    int statusid = issuestatus.getId().intValue();
+    System.out.println(issuestatus);
+    if (statusid != 80) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+    boolean isIssueOpen(int issueId) throws IOException, ServiceException {
+      Issue testIssue = app.soap().getIssue(issueId);
+      ObjectRef issuestatus = testIssue.getStatus();
+      int statusid = issuestatus.getId().intValue();
+      System.out.println(issuestatus);
+      if(statusid == 10){
+        return true;
+      }else{
+        return false;
+      }
   }
 
   @AfterSuite(alwaysRun = true)
@@ -30,11 +53,19 @@ public class TestBase {
     app.stop();
   }
 
-  public void skipIfNotFixed(int issueId) throws IOException {
+  public void skipIfNotFixed(int issueId) throws IOException, ServiceException {
+    if (isIssueNotFixed(issueId)) {
+      throw new SkipException("Ignored because of issue " + issueId + " is not fixed");
+    }
+  }
+
+  public void skipIfOpen(int issueId) throws IOException, ServiceException {
     if (isIssueOpen(issueId)) {
-      throw new SkipException("Ignored because of issue " + issueId);
+      throw new SkipException("Ignored because of issue " + issueId + " is open");
     }
   }
 
 }
+
+
 
