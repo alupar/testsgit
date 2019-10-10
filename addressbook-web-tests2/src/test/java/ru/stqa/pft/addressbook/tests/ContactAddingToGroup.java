@@ -7,10 +7,6 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.testng.Assert.assertEquals;
-
 public class ContactAddingToGroup extends TestBase {
 
   private GroupData groupToAdd;
@@ -32,43 +28,31 @@ public class ContactAddingToGroup extends TestBase {
       app.group().create(new GroupData().withName("test111").withFooter("footer1").withHeader("header1"));
     }
 
-    groupToAdd = app.db().groups().iterator().next();
-    groupToAddId = groupToAdd.getId();
-    System.out.println("group = " + groupToAdd.getId());
     Contacts allcontacts = app.db().contacts();
-
     Groups allgroups = app.db().groups();
 
     for (ContactData contactToAdd1 : allcontacts) {
       Groups contactGroups = contactToAdd1.getGroups();
-      allgroups.remove(contactGroups);
-      System.out.println(allgroups);
-      int i = 0;
-        for (GroupData groupOfContact : contactGroups){
-          if (groupOfContact.getId() == groupToAdd.getId()){
-            i=1;
-          }
-        }
-        if (i != 1){
-          contactToAdd = contactToAdd1;
-          contactToAddId = contactToAdd.getId();
-          System.out.println("contact = " + contactToAddId);
-          break;
-        }
+      if(contactGroups.size()!= allgroups.size()) {
+        allgroups.removeAll(contactGroups);
+        groupToAdd = allgroups.iterator().next();
+        contactToAdd = contactToAdd1;
+        break;
+      }
     }
-    System.out.println("contact = " + contactToAddId);
   }
 
   @Test
   public void testContactAddingToGroup(){
-    ContactData contactToAdd = new ContactData().withId(contactToAddId);
-    GroupData groupToAdd = new GroupData().withId(groupToAddId);
-
+    ContactData contactbefore = contactToAdd;
     Groups contactgroupsbefore = contactToAdd.getGroups();
     app.contact().addtogroup(contactToAdd, groupToAdd);
     Groups contactgroupsafter = contactToAdd.getGroups();
-    assertThat(contactgroupsbefore, equalTo(contactgroupsafter.withAdded(groupToAdd)));
-    assertEquals(contactgroupsbefore.size()+1, contactgroupsafter.size());
+    assert (contactgroupsbefore.equals(contactgroupsafter.without(groupToAdd)));
+    assert (contactbefore.equals(contactToAdd));
+
+//   assertThat(contactgroupsbefore, equalTo(contactgroupsafter.without(groupToAdd)));
+//    assertEquals(contactgroupsbefore.size(), contactgroupsafter.without(groupToAdd).size());
 
   }
 }

@@ -33,8 +33,8 @@ public class UserPwdChangeTests extends TestBase{
     String adminpassword = app.getProperty("mailserver.adminpassword");
     HttpSession session = app.newSession();
 
-    usersetup();
-//    userfromdb();
+ //   usersetup();
+    userfromdb();
 
  //   assertTrue(session.login(adminname, adminpwd));
     app.usersadmin().loginAsAnybody(adminname, adminpwd);
