@@ -47,6 +47,13 @@ public class HttpSession {
     }
   }
 
+  public boolean isLoggedIn(String username) throws IOException{
+    HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/my_view_page.php");
+    CloseableHttpResponse response = httpclient.execute(get);
+    String body = getTextFrom(response);
+    return body.contains(String.format("<span class=\"user-info\">%s</span>", username));
+  }
+
   public boolean isLoggedInAs(String username) throws IOException{
     HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/account_page.php");
     CloseableHttpResponse response = httpclient.execute(get);

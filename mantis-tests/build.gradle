@@ -14,6 +14,12 @@ dependencies {
     compile("org.subethamail:subethasmtp:3.1.7")
     compile("ru.lanwen.verbalregex:java-verbal-expressions:1.6")
     compile("biz.futureware.mantis:mantis-axis-soap-client:1.2.19")
+    compile("com.beust:jcommander:1.78")
+    compile("com.thoughtworks.xstream:xstream:1.4.11.1")
+    compile("com.google.code.gson:gson:2.8.5")
+    compile("ch.qos.logback:logback-classic:1.3.0-alpha4")
+    compile("mysql:mysql-connector-java:8.0.17")
+    compile("org.hibernate:hibernate-agroal:5.3.12.Final")
 
     implementation 'org.apache.httpcomponents:httpclient:4.5.10'
 }

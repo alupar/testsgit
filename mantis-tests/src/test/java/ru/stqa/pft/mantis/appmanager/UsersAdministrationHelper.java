@@ -34,9 +34,9 @@ public class UsersAdministrationHelper extends HelperBase {
 
   public void finishPwdReset(String confirmationLink, String newpassword, String username) {
     wd.get(confirmationLink);
-    type(By.name("username"),username);
-    click(By.cssSelector("button[type='submit']"));
+    type(By.name("realname"),username);
     type(By.name("password"), newpassword);
+    type(By.name("password_confirm"), newpassword);
     click(By.cssSelector("button[type='submit']"));
 
   }
