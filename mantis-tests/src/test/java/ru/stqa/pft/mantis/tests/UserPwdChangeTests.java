@@ -41,7 +41,8 @@ public class UserPwdChangeTests extends TestBase{
  //   app.james().createUser(username, password);
 //    List<MailMessage> mailMessages = app.james().waitForMail(username, password, 60000);
 
-    List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
+    List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
+    System.out.println("message = " + mailMessages);
     String confirmationLink = findConfirmationLink(mailMessages, email);
     System.out.println(confirmationLink);
     app.usersadmin().finishPwdReset(confirmationLink, newpassword, username);

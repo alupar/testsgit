@@ -13,6 +13,8 @@ import static org.testng.Assert.assertEquals;
 
 public class ContactAddingToGroup extends TestBase {
 
+  private GroupData groupToAdd;
+  private ContactData contactToAdd;
   private int groupToAddId;
   private int contactToAddId;
 
@@ -30,13 +32,17 @@ public class ContactAddingToGroup extends TestBase {
       app.group().create(new GroupData().withName("test111").withFooter("footer1").withHeader("header1"));
     }
 
-    GroupData groupToAdd = app.db().groups().iterator().next();
+    groupToAdd = app.db().groups().iterator().next();
     groupToAddId = groupToAdd.getId();
     System.out.println("group = " + groupToAdd.getId());
     Contacts allcontacts = app.db().contacts();
 
+    Groups allgroups = app.db().groups();
+
     for (ContactData contactToAdd1 : allcontacts) {
       Groups contactGroups = contactToAdd1.getGroups();
+      allgroups.remove(contactGroups);
+      System.out.println(allgroups);
       int i = 0;
         for (GroupData groupOfContact : contactGroups){
           if (groupOfContact.getId() == groupToAdd.getId()){
@@ -44,7 +50,7 @@ public class ContactAddingToGroup extends TestBase {
           }
         }
         if (i != 1){
-          ContactData contactToAdd = contactToAdd1;
+          contactToAdd = contactToAdd1;
           contactToAddId = contactToAdd.getId();
           System.out.println("contact = " + contactToAddId);
           break;
