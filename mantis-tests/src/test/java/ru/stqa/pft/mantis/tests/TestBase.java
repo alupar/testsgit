@@ -27,8 +27,9 @@ public class TestBase {
     Issue testIssue = app.soap().getIssue(issueId);
     ObjectRef issuestatus = testIssue.getStatus();
     int statusid = issuestatus.getId().intValue();
+    String statusname = issuestatus.getName();
     System.out.println(issuestatus);
-    if (statusid != 80) {
+    if (statusname != "решена"){
       return true;
     } else {
       return false;
@@ -39,8 +40,9 @@ public class TestBase {
       Issue testIssue = app.soap().getIssue(issueId);
       ObjectRef issuestatus = testIssue.getStatus();
       int statusid = issuestatus.getId().intValue();
+      String statusname = issuestatus.getName();
       System.out.println(issuestatus);
-      if(statusid == 10){
+      if(statusname == "новая"){
         return true;
       }else{
         return false;

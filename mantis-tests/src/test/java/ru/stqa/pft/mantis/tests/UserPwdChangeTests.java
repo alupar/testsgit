@@ -19,6 +19,7 @@ public class UserPwdChangeTests extends TestBase{
   private String username;
   private String email;
   private String password;
+
   @BeforeMethod
   public void startMailServer(){
     app.mail().start();
@@ -33,7 +34,7 @@ public class UserPwdChangeTests extends TestBase{
     String adminpassword = app.getProperty("mailserver.adminpassword");
     HttpSession session = app.newSession();
 
- //   usersetup();
+//    usersetup();
     userfromdb();
 
  //   assertTrue(session.login(adminname, adminpwd));
@@ -44,7 +45,7 @@ public class UserPwdChangeTests extends TestBase{
     app.usersadmin().logout();
 
 //    app.james().doesUserExist(username);
- //   List<MailMessage> mailMessages = app.james().waitForMail(username, password, 60000);
+//    List<MailMessage> mailMessages = app.james().waitForMail(username, password, 60000);
     List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
 
     System.out.println("message = " + mailMessages);
@@ -67,7 +68,7 @@ public class UserPwdChangeTests extends TestBase{
   private void usersetup(){
     username = "user1569607874295";
     email = "user1569607874295@localhost.localdomain";
-    password = "newpassword";
+    password = "password";
   }
 
   public void userfromdb(){
