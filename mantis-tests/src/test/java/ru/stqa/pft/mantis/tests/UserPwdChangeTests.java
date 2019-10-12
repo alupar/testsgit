@@ -1,7 +1,6 @@
 package ru.stqa.pft.mantis.tests;
 
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.lanwen.verbalregex.VerbalExpression;
 import ru.stqa.pft.mantis.appmanager.HttpSession;
@@ -9,8 +8,13 @@ import ru.stqa.pft.mantis.model.MailMessage;
 import ru.stqa.pft.mantis.model.UserData;
 import ru.stqa.pft.mantis.model.Users;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.mail.MessagingException;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import static org.testng.Assert.assertTrue;
@@ -19,11 +23,12 @@ public class UserPwdChangeTests extends TestBase{
   private String username;
   private String email;
   private String password;
+  private Cipher dcipher;
 
-  @BeforeMethod
-  public void startMailServer(){
-    app.mail().start();
-  }
+ // @BeforeMethod
+ // public void startMailServer(){
+ //   app.mail().start();
+ // }
 
   @Test
   public void testUserPwdChange() throws IOException, MessagingException {
@@ -34,8 +39,8 @@ public class UserPwdChangeTests extends TestBase{
     String adminpassword = app.getProperty("mailserver.adminpassword");
     HttpSession session = app.newSession();
 
-//    usersetup();
-    userfromdb();
+    usersetup();
+//    userfromdb();
 
  //   assertTrue(session.login(adminname, adminpwd));
     app.usersadmin().loginAsAnybody(adminname, adminpwd);
@@ -44,9 +49,11 @@ public class UserPwdChangeTests extends TestBase{
     app.usersadmin().resetPassword();
     app.usersadmin().logout();
 
-//    app.james().doesUserExist(username);
-//    List<MailMessage> mailMessages = app.james().waitForMail(username, password, 60000);
-    List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
+    app.james().doesUserExist(username);
+    String username1 = username;
+    String password1 = password;
+    List<MailMessage> mailMessages = app.james().waitForMail(username, password, 60000);
+//    List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
 
     System.out.println("message = " + mailMessages);
     String confirmationLink = findConfirmationLink(mailMessages, email);
@@ -71,7 +78,7 @@ public class UserPwdChangeTests extends TestBase{
     password = "password";
   }
 
-  public void userfromdb(){
+  public void userfromdb() throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException {
     Users allusers = app.db().users();
     UserData user = null;
     String adminname1 = "administrator";
@@ -84,6 +91,7 @@ public class UserPwdChangeTests extends TestBase{
     username = user.getName();
     email = user.getEmail();
     password = user.getPassword();
+
   }
 
     @AfterMethod(alwaysRun = true)

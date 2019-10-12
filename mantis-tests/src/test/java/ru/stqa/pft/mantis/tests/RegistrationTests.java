@@ -32,6 +32,7 @@ public class RegistrationTests extends TestBase{
     String confirmationLink = findConfirmationLink(mailMessages, email);
     System.out.println(confirmationLink);
     app.registration().finish(confirmationLink, password, user);
+    System.out.println("User " + user + "password = " + password);
     assertTrue(app.newSession().login(user,password));
   }
 
