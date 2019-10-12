@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ru.stqa.pft.addressbook.tests.GroupModificationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-09-11T17:35:33" hostname="DESKTOP-MAF5J3C" time="4.656">
+<testsuite name="ru.stqa.pft.addressbook.tests.GroupModificationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-10-12T18:52:35" hostname="DESKTOP-MAF5J3C" time="1.469">
   <properties/>
-  <testcase name="testGroupModification" classname="ru.stqa.pft.addressbook.tests.GroupModificationTests" time="4.656"/>
-  <system-out><![CDATA[]]></system-out>
+  <testcase name="testGroupModification" classname="ru.stqa.pft.addressbook.tests.GroupModificationTests" time="1.469"/>
+  <system-out><![CDATA[21:52:35.467 [Test worker] INFO  r.s.pft.addressbook.tests.TestBase - Start test testGroupModification
+Hibernate: select groupdata0_.group_id as group_id1_2_, groupdata0_.group_footer as group_fo2_2_, groupdata0_.group_header as group_he3_2_, groupdata0_.group_name as group_na4_2_ from group_list groupdata0_
+Hibernate: select groupdata0_.group_id as group_id1_2_, groupdata0_.group_footer as group_fo2_2_, groupdata0_.group_header as group_he3_2_, groupdata0_.group_name as group_na4_2_ from group_list groupdata0_
+Hibernate: select groupdata0_.group_id as group_id1_2_, groupdata0_.group_footer as group_fo2_2_, groupdata0_.group_header as group_he3_2_, groupdata0_.group_name as group_na4_2_ from group_list groupdata0_
+21:52:37.401 [Test worker] INFO  r.s.pft.addressbook.tests.TestBase - Stop test testGroupModification with parameters[]
+]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
