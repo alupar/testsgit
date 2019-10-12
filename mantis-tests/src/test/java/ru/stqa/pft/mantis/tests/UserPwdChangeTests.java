@@ -74,7 +74,7 @@ public class UserPwdChangeTests extends TestBase{
 
   private void usersetup(){
     username = "user1569607874295";
-    email = "user1569607874295@localhost.localdomain";
+    email = "user1569607874295@localhost";
     password = "password";
   }
 
