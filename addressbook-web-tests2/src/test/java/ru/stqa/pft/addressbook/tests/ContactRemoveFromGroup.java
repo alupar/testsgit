@@ -7,10 +7,6 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.testng.Assert.assertEquals;
-
 public class ContactRemoveFromGroup extends TestBase {
   @BeforeMethod
   public void ensurePreconditions(){
@@ -50,30 +46,21 @@ public class ContactRemoveFromGroup extends TestBase {
     GroupData grouptoremove = contactgroups.iterator().next();
     ContactData contactbefore = removedContact;
     int beforeid = contactbefore.getId();
+    Groups contactgroupsbefore = contactbefore.getGroups();
 
     app.contact().removefromgroup(removedContact, grouptoremove);
 
-    Groups groupsafter = app.db().groups();
-    Contacts contactsafter = app.db().contacts();
-
-    assertEquals(groupsbefore.size(), groupsafter.size());
-    assertEquals(contactsbefore.size(), contactsafter.size());
-    assertThat(groupsafter, equalTo(groupsbefore));
-    assertThat(contactsafter, equalTo(contactsbefore));
-
+    Contacts allcontactsafter = app.db().contacts();
     ContactData contactafter = null;
 
-    for(ContactData contactafter1 : contactsafter){
+    for(ContactData contactafter1 : allcontactsafter){
       if (contactafter1.getId() == beforeid){
         contactafter = contactafter1;
         break;
       }
     }
 
-    Groups contactgroupsafter = contactafter.getGroups();
- //   assert (contactgroups.equals(contactafter.getGroups().without(grouptoremove)));
-
+    assert (contactgroupsbefore.equals(contactafter.getGroups().withAdded(grouptoremove)));
     assert (contactbefore.equals(contactafter));
-
-    }
+  }
 }
