@@ -9,7 +9,6 @@ import ru.stqa.pft.mantis.model.UserData;
 import ru.stqa.pft.mantis.model.Users;
 
 import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.mail.MessagingException;
@@ -23,7 +22,6 @@ public class UserPwdChangeTests extends TestBase{
   private String username;
   private String email;
   private String password;
-  private Cipher dcipher;
 
  // @BeforeMethod
  // public void startMailServer(){
@@ -42,17 +40,17 @@ public class UserPwdChangeTests extends TestBase{
     usersetup();
 //    userfromdb();
 
- //   assertTrue(session.login(adminname, adminpwd));
+    String password1 = "password";
+    app.james().deleteUser(username);
+    app.james().createUser(username, password1);
     app.usersadmin().loginAsAnybody(adminname, adminpwd);
     app.usersadmin().gotoUsersAdministration();
     app.usersadmin().selectUser(username);
     app.usersadmin().resetPassword();
     app.usersadmin().logout();
 
-    app.james().doesUserExist(username);
-    String username1 = username;
-    String password1 = password;
-    List<MailMessage> mailMessages = app.james().waitForMail(username, password, 60000);
+
+    List<MailMessage> mailMessages = app.james().waitForMail(username, password1, 60000);
 //    List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
 
     System.out.println("message = " + mailMessages);
