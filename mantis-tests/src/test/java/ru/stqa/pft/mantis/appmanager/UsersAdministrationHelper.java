@@ -45,4 +45,8 @@ public class UsersAdministrationHelper extends HelperBase {
     wd.get(app.getProperty("web.logoutUrl"));
   }
 
+  public void changeemail(String username, String email) {
+    type(By.name("email"), email.replace(".localdomain", ""));
+    click(By.cssSelector("input[value='Изменить пользователя']"));
+  }
 }

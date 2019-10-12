@@ -15,6 +15,7 @@ import javax.mail.MessagingException;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.testng.Assert.assertTrue;
 
@@ -29,7 +30,7 @@ public class UserPwdChangeTests extends TestBase{
  // }
 
   @Test
-  public void testUserPwdChange() throws IOException, MessagingException {
+  public void testUserPwdChange() throws IOException, MessagingException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, InterruptedException {
     String newpassword = "newpassword";
     String adminname = app.getProperty("web.adminLogin");
     String adminpwd = app.getProperty("web.adminPassword");
@@ -37,25 +38,33 @@ public class UserPwdChangeTests extends TestBase{
     String adminpassword = app.getProperty("mailserver.adminpassword");
     HttpSession session = app.newSession();
 
-    usersetup();
-//    userfromdb();
+//    usersetup();
+    userfromdb();
+ //   email = email.replace(".local", "");
 
     String password1 = "password";
-    app.james().deleteUser(username);
+    boolean ifuserexists = app.james().doesUserExist(username);
+    if(ifuserexists) {
+      app.james().deleteUser(username);
+    }
     app.james().createUser(username, password1);
+    app.james().drainEmail(username, password1);
+
     app.usersadmin().loginAsAnybody(adminname, adminpwd);
     app.usersadmin().gotoUsersAdministration();
     app.usersadmin().selectUser(username);
+    if(email.contains(".local")) {
+      app.usersadmin().changeemail(username, email);
+    }
+    TimeUnit.SECONDS.sleep(5);
     app.usersadmin().resetPassword();
     app.usersadmin().logout();
-
 
     List<MailMessage> mailMessages = app.james().waitForMail(username, password1, 60000);
 //    List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
 
-    System.out.println("message = " + mailMessages);
     String confirmationLink = findConfirmationLink(mailMessages, email);
-    System.out.println(confirmationLink);
+    System.out.println("confirmationLink = " + confirmationLink);
     app.usersadmin().finishPwdReset(confirmationLink, newpassword, username);
 
     assertTrue(session.login(username, newpassword));

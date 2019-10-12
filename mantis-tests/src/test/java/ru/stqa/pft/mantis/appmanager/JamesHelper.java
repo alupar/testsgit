@@ -148,6 +148,7 @@ public class JamesHelper {
     throw new Error("No mail :(");
   }
 
+
   public List<MailMessage> getAllMail(String username, String password) throws MessagingException{
     Folder inbox = openInbox(username, password);
     List<MailMessage> messages = Arrays.asList(inbox.getMessages()).stream().map((m) -> toModelMail(m)).collect(Collectors.toList());
