@@ -29,7 +29,7 @@ public class TestBase {
     int statusid = issuestatus.getId().intValue();
     String statusname = issuestatus.getName();
     System.out.println(issuestatus);
-    if (statusname != "решена"){
+    if (!statusname.equals("решена")){
       return true;
     } else {
       return false;
@@ -42,7 +42,7 @@ public class TestBase {
       int statusid = issuestatus.getId().intValue();
       String statusname = issuestatus.getName();
       System.out.println(issuestatus);
-      if(statusname == "новая"){
+      if(statusname.equals("новая")){
         return true;
       }else{
         return false;

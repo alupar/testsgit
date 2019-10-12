@@ -30,6 +30,7 @@ public class ContactAddingToGroup extends TestBase {
 
     Contacts allcontacts = app.db().contacts();
     Groups allgroups = app.db().groups();
+    groupToAdd = null;
 
     for (ContactData contactToAdd1 : allcontacts) {
       Groups contactGroups = contactToAdd1.getGroups();
@@ -40,20 +41,42 @@ public class ContactAddingToGroup extends TestBase {
         break;
       }
     }
+
+    if(groupToAdd.equals(null)){
+      ContactData newcontact = new ContactData().withFirstname("first9").withLastname("last9").withNickname("nick9").withCompany("company9").withAddress("address9")
+              .withMobilephone("12345").withHomephone("2992").withWorkphone("999")
+              .withFirstemail("w@ww.ww").withSecondemail("e@e.e").withThirdemail("q@q.q");
+      Contacts before = app.db().contacts();
+      app.contact().create(newcontact);
+      Contacts after = app.db().contacts();
+      newcontact.withId(after.stream().mapToInt((g) -> (g).getId()).max().getAsInt());
+      int newid = newcontact.getId();
+      contactToAdd = newcontact;
+      groupToAdd = allgroups.iterator().next();
+    }
+
   }
 
   @Test
   public void testContactAddingToGroup(){
     ContactData contactbefore = contactToAdd;
     Groups contactgroupsbefore = contactToAdd.getGroups();
+    int beforeid = contactToAdd.getId();
+
     app.contact().addtogroup(contactToAdd, groupToAdd);
-    Groups contactgroupsafter = contactToAdd.getGroups();
-    assert (contactgroupsbefore.equals(contactgroupsafter.without(groupToAdd)));
-    assert (contactbefore.equals(contactToAdd));
 
-//   assertThat(contactgroupsbefore, equalTo(contactgroupsafter.without(groupToAdd)));
-//    assertEquals(contactgroupsbefore.size(), contactgroupsafter.without(groupToAdd).size());
+    Contacts allcontactsafter = app.db().contacts();
+    ContactData contactafter = null;
 
+    for(ContactData contactafter1 : allcontactsafter){
+      if (contactafter1.getId() == beforeid){
+        contactafter = contactafter1;
+        break;
+      }
+    }
+
+    assert (contactgroupsbefore.equals(contactafter.getGroups().without(groupToAdd)));
+    assert (contactbefore.equals(contactafter));
   }
 }
 

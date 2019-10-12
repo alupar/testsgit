@@ -8,7 +8,6 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
-import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.List;
 import java.util.Set;
@@ -120,11 +119,8 @@ public class ContactHelper extends HelperBase {
     returnToHomePage();
   }
 
-  public void removefromgroup(ContactData contact, Groups allgroups) {
+  public void removefromgroup(ContactData contact, GroupData group1) {
     selectContactById(contact.getId());
-    Groups contactgroups = contact.getGroups();
-    GroupData group1 = contactgroups.iterator().next();
-
     new Select(wd.findElement(By.name("group"))).selectByVisibleText(group1.getName());
     deleteSelectedContactFromGroup(contact, group1);
     System.out.println("Removed contact " + contact.getId() + " from a group " + group1.getId() + " " + group1.getName());

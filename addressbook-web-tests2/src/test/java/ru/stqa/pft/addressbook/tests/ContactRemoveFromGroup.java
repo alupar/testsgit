@@ -46,7 +46,12 @@ public class ContactRemoveFromGroup extends TestBase {
       app.contact().addtogroup(removedContact, groupToAdd);
     }
 
-    app.contact().removefromgroup(removedContact, groupsbefore);
+    Groups contactgroups = removedContact.getGroups();
+    GroupData grouptoremove = contactgroups.iterator().next();
+    ContactData contactbefore = removedContact;
+    int beforeid = contactbefore.getId();
+
+    app.contact().removefromgroup(removedContact, grouptoremove);
 
     Groups groupsafter = app.db().groups();
     Contacts contactsafter = app.db().contacts();
@@ -55,6 +60,20 @@ public class ContactRemoveFromGroup extends TestBase {
     assertEquals(contactsbefore.size(), contactsafter.size());
     assertThat(groupsafter, equalTo(groupsbefore));
     assertThat(contactsafter, equalTo(contactsbefore));
+
+    ContactData contactafter = null;
+
+    for(ContactData contactafter1 : contactsafter){
+      if (contactafter1.getId() == beforeid){
+        contactafter = contactafter1;
+        break;
+      }
+    }
+
+    Groups contactgroupsafter = contactafter.getGroups();
+ //   assert (contactgroups.equals(contactafter.getGroups().without(grouptoremove)));
+
+    assert (contactbefore.equals(contactafter));
 
     }
 }
