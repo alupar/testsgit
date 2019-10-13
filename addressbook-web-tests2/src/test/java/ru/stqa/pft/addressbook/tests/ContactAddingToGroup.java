@@ -42,7 +42,7 @@ public class ContactAddingToGroup extends TestBase {
       }
     }
 
-    if(groupToAdd.equals(null)){
+    if(groupToAdd == null){
       ContactData newcontact = new ContactData().withFirstname("first9").withLastname("last9").withNickname("nick9").withCompany("company9").withAddress("address9")
               .withMobilephone("12345").withHomephone("2992").withWorkphone("999")
               .withFirstemail("w@ww.ww").withSecondemail("e@e.e").withThirdemail("q@q.q");
@@ -59,9 +59,17 @@ public class ContactAddingToGroup extends TestBase {
 
   @Test
   public void testContactAddingToGroup(){
-    ContactData contactbefore = contactToAdd;
-    Groups contactgroupsbefore = contactToAdd.getGroups();
     int beforeid = contactToAdd.getId();
+    Contacts allcontactsbefore = app.db().contacts();
+    ContactData contactbefore = null;
+
+    for(ContactData contactbefore1 : allcontactsbefore){
+      if (contactbefore1.getId() == beforeid){
+        contactbefore = contactbefore1;
+        break;
+      }
+    }
+    Groups before = contactbefore.getGroups();
 
     app.contact().addtogroup(contactToAdd, groupToAdd);
 
@@ -74,9 +82,9 @@ public class ContactAddingToGroup extends TestBase {
         break;
       }
     }
+    Groups after = contactafter.getGroups();
 
-    assert (contactgroupsbefore.equals(contactafter.getGroups().without(groupToAdd)));
-    assert (contactbefore.equals(contactafter));
+    assert (after.equals(before.withAdded(groupToAdd)));
   }
 }
 

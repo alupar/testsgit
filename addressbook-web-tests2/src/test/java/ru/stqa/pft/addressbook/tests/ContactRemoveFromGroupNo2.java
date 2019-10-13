@@ -7,7 +7,7 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
-public class ContactRemoveFromGroup extends TestBase {
+public class ContactRemoveFromGroupNo2 extends TestBase {
   @BeforeMethod
   public void ensurePreconditions(){
     app.contact().returnToHomePage();
@@ -27,19 +27,22 @@ public class ContactRemoveFromGroup extends TestBase {
   public void testContactDeletionFromGroup(){
     Groups groupsbefore = app.db().groups();
     Contacts contactsbefore = app.db().contacts();
+    GroupData grouptoremove = groupsbefore.iterator().next();
+
     ContactData removedContact = contactsbefore.iterator().next();
+    int i = 0;
 
     for (ContactData removedContact1 : contactsbefore){
       Groups contactGroups = removedContact1.getGroups();
-      if (contactGroups.size() != 0){
+      if (contactGroups.contains(grouptoremove)){
         removedContact = removedContact1;
+        i++;
         break;
       }
     }
 
-    if(removedContact.getGroups().size() == 0){
-      GroupData groupToAdd = groupsbefore.iterator().next();
-      app.contact().addtogroup(removedContact, groupToAdd);
+    if (i==0){
+       app.contact().addtogroup(removedContact, grouptoremove);
     }
 
     int beforeid = removedContact.getId();
@@ -53,7 +56,6 @@ public class ContactRemoveFromGroup extends TestBase {
       }
     }
     Groups before = contactbefore.getGroups();
-    GroupData grouptoremove = before.iterator().next();
 
     app.contact().removefromgroup(removedContact, grouptoremove);
 
@@ -68,6 +70,6 @@ public class ContactRemoveFromGroup extends TestBase {
     }
     Groups after = contactafter.getGroups();
 
-    assert (after).equals(before.without(grouptoremove));
+    assert (after.equals(before.without(grouptoremove)));
   }
 }

@@ -79,7 +79,8 @@ public class ContactHelper extends HelperBase {
     System.out.println("Added contact " + contact.getId() + " to a group " + group1.getId() + " " + group1.getName());
   }
 
-  private void deleteSelectedContactFromGroup(ContactData contact, GroupData group) {
+  private void deleteSelectedContactFromGroup(String groupname) {
+//    click(By.xpath("//input[@value='Remove from \"" + groupname + "\"']"));
     click(By.xpath("//input[@name='remove']"));
     wd.findElement(By.cssSelector("div.msgbox"));
   }
@@ -121,8 +122,11 @@ public class ContactHelper extends HelperBase {
 
   public void removefromgroup(ContactData contact, GroupData group1) {
     selectContactById(contact.getId());
-    new Select(wd.findElement(By.name("group"))).selectByVisibleText(group1.getName());
-    deleteSelectedContactFromGroup(contact, group1);
+    String myvalue1 = String.valueOf(group1.getId());
+    new Select(wd.findElement(By.name("group"))).selectByValue(myvalue1);
+    selectContactById(contact.getId());
+    String groupname = group1.getName();
+    deleteSelectedContactFromGroup(groupname);
     System.out.println("Removed contact " + contact.getId() + " from a group " + group1.getId() + " " + group1.getName());
     returnToHomePage();
   }
