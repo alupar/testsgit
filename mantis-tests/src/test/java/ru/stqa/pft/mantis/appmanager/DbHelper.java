@@ -11,8 +11,14 @@ import ru.stqa.pft.mantis.model.Users;
 import java.util.List;
 
 public class DbHelper {
-  private final SessionFactory sessionFactory;
 
+  private ApplicationManager app;
+  public DbHelper(ApplicationManager app){
+    this.app = app;
+    sessionFactory = null;
+  }
+
+  private final SessionFactory sessionFactory;
   public DbHelper(){
     // A SessionFactory is set up once for an application!
     final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()

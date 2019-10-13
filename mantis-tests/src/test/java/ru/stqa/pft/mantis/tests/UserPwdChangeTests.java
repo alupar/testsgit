@@ -90,7 +90,7 @@ public class UserPwdChangeTests extends TestBase{
     UserData user = null;
     String adminname1 = "administrator";
     for(UserData user1 : allusers){
-      if(user1.getName()!=adminname1) {
+      if(!user1.getName().equals(adminname1)) {
         user = user1;
         break;
       }
