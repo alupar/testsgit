@@ -1,5 +1,5 @@
 package ru.stqa.pft.addressbook.appmanager;
-
+//Редактирование
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Platform;
